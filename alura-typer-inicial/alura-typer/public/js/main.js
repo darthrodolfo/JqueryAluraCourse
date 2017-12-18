@@ -7,6 +7,19 @@ $(function () {
     inicializaMarcadores();
     $("#botao-reiniciar").click(reiniciaJogo);
     $(".botao-remover").click(removerLinha);
+
+    atualizaPlacar();
+
+    $("#usuarios").selectize({
+        create: true,
+        sortField: 'text'
+    });
+
+    $(".tooltip").tooltipster({
+        animation: "fade",
+        theme: "tooltipster-borderless",
+        trigger: "custom"
+    });
 });
 
 function atualizaTamanhoFrase() {
@@ -29,9 +42,10 @@ function inicializaContadores() {
 }
 
 function inicializaCronometro() {
-    var tempoRestante = $("#tempo-digitacao").text();
-
     campoDigitacao.one("focus", function () {
+
+        var tempoRestante = $("#tempo-digitacao").text();
+
         $("#botao-reiniciar").attr("disabled", true);
 
         var cronometroId = setInterval(function () {
@@ -50,17 +64,16 @@ function inicializaCronometro() {
 
                 inserePlacar();
 
-                campo.removeClass("borda-vermelha"); //novo
-                campo.removeClass("borda-verde"); //novo
+                campoDigitacao.removeClass("borda-vermelha"); //novo
+                campoDigitacao.removeClass("borda-verde"); //novo
             }
-
         }, 1000);
     });
 }
 
 function inicializaMarcadores() {
-    var frase = $(".frase").text();
     campoDigitacao.on("input", function () {
+        var frase = $(".frase").text();
         var digitado = campoDigitacao.val();
 
         if (frase.startsWith(digitado)) {
@@ -71,6 +84,11 @@ function inicializaMarcadores() {
             campoDigitacao.removeClass("borda-verde");
         }
     });
+}
+
+function atualizaTempoInicial(tempo) {
+    $("#tempo-digitacao").text(tempo);
+    tempoInicial = tempo;
 }
 
 function reiniciaJogo() {
