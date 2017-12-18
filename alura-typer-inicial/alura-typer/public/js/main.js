@@ -6,7 +6,7 @@ $(function () {
     inicializaCronometro();
     inicializaMarcadores();
     $("#botao-reiniciar").click(reiniciaJogo);
-    $(".botao-remover").click(removerLinha);
+    $(".botao-remover").click(removeLinha);
 
     atualizaPlacar();
 
